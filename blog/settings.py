@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -40,6 +41,8 @@ INSTALLED_APPS = [
     # 3rd Party Apps
     'rest_framework',
     'rest_framework.authtoken',
+    'crispy_forms',
+    'crispy_bootstrap5',
     # Local Apps
     'users',
     'post.apps.PostConfig',
@@ -60,7 +63,7 @@ ROOT_URLCONF = 'blog.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -124,7 +127,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static"),]
+STATIC_ROOT = 'staticfiles'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
@@ -144,3 +149,11 @@ REST_FRAMEWORK = {
     ]
 
 }
+
+# crispy forms
+CRISPY_TEMPLATE_PACK = "bootstrap5"
+
+
+# django.contrib.auth settings
+LOGIN_REDIRECT_URL = "posts"
+LOGOUT_REDIRECT_URL = "posts"

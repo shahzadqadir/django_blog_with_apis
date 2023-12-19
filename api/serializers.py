@@ -29,7 +29,8 @@ class AuthorSerializer(serializers.Serializer):
 class PostSerializer(serializers.Serializer):
     id = serializers.IntegerField(read_only=True)
     author = serializers.CharField(max_length=255, read_only=True)
-    text = serializers.CharField(max_length=255)
+    title = serializers.CharField(max_length=100)
+    text = serializers.CharField(max_length=1000)
     date_posted = serializers.DateTimeField(default=timezone.now(), required=False)
 
     def validate_author(self, value):
@@ -46,6 +47,12 @@ class PostSerializer(serializers.Serializer):
         if author:
             return Post.objects.create(author=author, text=validated_data['text'])
         return None
+    
+    def update(self, instance, validated_data):
+        for key, value in validated_data.items():
+            setattr(instance, key, value)
+        instance.save()
+        return instance
 
 
 

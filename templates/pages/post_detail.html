@@ -1,0 +1,22 @@
+{% extends '_base.html' %}
+
+{% block title %}Post Details{% endblock %}
+
+{% block content %}
+
+<div class="card">
+  <div class="card-header bg-transparent border-success">{{ post.title }}</div>
+  <div class="card-body">
+    <p class="card-text">{{ post.text }}</p>
+    <p class="card-text">By {{ post.author.email }}</p>
+    <p class="card-text">By {{ post.date_posted }}</p
+  </div>
+  <div class="card-footer bg-transparent border-success">
+    {% if is_author %}
+      <a class="btn btn-danger" href="{% url 'post_delete' post.id %}">Delete</a>
+      <a class="btn btn-primary" href="{% url 'post_update' post.id %}">Update</a>
+    {% endif %}
+  </div>
+</div>
+
+{% endblock %}
